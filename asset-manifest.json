@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/Urban/static/css/main.c38ea619.chunk.css",
+    "main.js": "/Urban/static/js/main.e9c8d01b.chunk.js",
+    "main.js.map": "/Urban/static/js/main.e9c8d01b.chunk.js.map",
+    "runtime-main.js": "/Urban/static/js/runtime-main.e67e3b71.js",
+    "runtime-main.js.map": "/Urban/static/js/runtime-main.e67e3b71.js.map",
+    "static/css/2.c8806456.chunk.css": "/Urban/static/css/2.c8806456.chunk.css",
+    "static/js/2.ca06c080.chunk.js": "/Urban/static/js/2.ca06c080.chunk.js",
+    "static/js/2.ca06c080.chunk.js.map": "/Urban/static/js/2.ca06c080.chunk.js.map",
+    "static/js/3.5938ad47.chunk.js": "/Urban/static/js/3.5938ad47.chunk.js",
+    "static/js/3.5938ad47.chunk.js.map": "/Urban/static/js/3.5938ad47.chunk.js.map",
+    "index.html": "/Urban/index.html",
+    "static/css/2.c8806456.chunk.css.map": "/Urban/static/css/2.c8806456.chunk.css.map",
+    "static/css/main.c38ea619.chunk.css.map": "/Urban/static/css/main.c38ea619.chunk.css.map",
+    "static/js/2.ca06c080.chunk.js.LICENSE.txt": "/Urban/static/js/2.ca06c080.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/Urban/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e67e3b71.js",
+    "static/css/2.c8806456.chunk.css",
+    "static/js/2.ca06c080.chunk.js",
+    "static/css/main.c38ea619.chunk.css",
+    "static/js/main.e9c8d01b.chunk.js"
+  ]
+}
