@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/Urban/static/css/main.7788d545.chunk.css",
-    "main.js": "/Urban/static/js/main.d2c4e2f6.chunk.js",
-    "main.js.map": "/Urban/static/js/main.d2c4e2f6.chunk.js.map",
+    "main.js": "/Urban/static/js/main.5d27c432.chunk.js",
+    "main.js.map": "/Urban/static/js/main.5d27c432.chunk.js.map",
     "runtime-main.js": "/Urban/static/js/runtime-main.ad18c4b9.js",
     "runtime-main.js.map": "/Urban/static/js/runtime-main.ad18c4b9.js.map",
     "static/css/2.c8806456.chunk.css": "/Urban/static/css/2.c8806456.chunk.css",
-    "static/js/2.bca143db.chunk.js": "/Urban/static/js/2.bca143db.chunk.js",
-    "static/js/2.bca143db.chunk.js.map": "/Urban/static/js/2.bca143db.chunk.js.map",
+    "static/js/2.3ee1eedd.chunk.js": "/Urban/static/js/2.3ee1eedd.chunk.js",
+    "static/js/2.3ee1eedd.chunk.js.map": "/Urban/static/js/2.3ee1eedd.chunk.js.map",
     "static/js/3.45ee11f1.chunk.js": "/Urban/static/js/3.45ee11f1.chunk.js",
     "static/js/3.45ee11f1.chunk.js.map": "/Urban/static/js/3.45ee11f1.chunk.js.map",
     "index.html": "/Urban/index.html",
     "static/css/2.c8806456.chunk.css.map": "/Urban/static/css/2.c8806456.chunk.css.map",
     "static/css/main.7788d545.chunk.css.map": "/Urban/static/css/main.7788d545.chunk.css.map",
-    "static/js/2.bca143db.chunk.js.LICENSE.txt": "/Urban/static/js/2.bca143db.chunk.js.LICENSE.txt"
+    "static/js/2.3ee1eedd.chunk.js.LICENSE.txt": "/Urban/static/js/2.3ee1eedd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ad18c4b9.js",
     "static/css/2.c8806456.chunk.css",
-    "static/js/2.bca143db.chunk.js",
+    "static/js/2.3ee1eedd.chunk.js",
     "static/css/main.7788d545.chunk.css",
-    "static/js/main.d2c4e2f6.chunk.js"
+    "static/js/main.5d27c432.chunk.js"
   ]
 }
