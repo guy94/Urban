@@ -12,7 +12,8 @@ class LayersCheckBox extends Component {
 calls a parent method inorder to get the chosen layer
 */
 displayLayer = (e) =>{
-    this.props.getLayer(e)
+    this.props.getLayer(e);
+    this.props.onCheckedChange();
 }
 
     render() { 

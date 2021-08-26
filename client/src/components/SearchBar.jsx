@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -55,10 +54,9 @@ class SearchBar extends React.Component {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
-                  // inline style for demonstration purpose
                   const style = suggestion.active
-                    ? { backgroundColor: '#08ffc8', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    ? { backgroundColor: '#EAEAEA', cursor: 'pointer' }
+                    : { backgroundColor: '#dddff6', cursor: 'pointer' };
                   return (
                     <div
                       {...getSuggestionItemProps(suggestion, {

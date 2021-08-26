@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import Geocode from "react-geocode";
 import SearchBar from './SearchBar'
 import LayersCheckBox from './LayersCheckBox'
 import {Helmet} from "react-helmet"
@@ -13,21 +12,13 @@ class Map extends Component {
         super(props);
         this.state = { center: {lat: 31.771959, lng:35.217018},
                         zoom: 12,
-                        bounds: null,
-                        markers: [],
-                        cluster: null,
-                        img: '',
-                        mapOptions: {
-                            center: {lat: 31.771959, lng:35.217018},
-                            zoom: 12,
-                        },
                         map: null,
                         layers: [],
                         dynamicLayers: {},
                         layersIds: [] 
                         };
         this.mapRef = React.createRef((ref) => {
-            this.mapRef = ref
+            this.mapRef = ref;
         });
     }
 
@@ -42,7 +33,7 @@ class Map extends Component {
     handles map api load
     */
     handleApiLoaded = (map, maps) => {
-        this.setState({map: map})
+        this.setState({map: map});
     }
 
     /*
@@ -78,8 +69,7 @@ class Map extends Component {
 
         let mapType = new window.google.maps.ImageMapType({
             getTileUrl: function (coord, zoom) {
-                if (zoom >= 16) {
-
+                if (zoom >= 16 && Object.keys(self.state.dynamicLayers).length > 0) {
                     // The call to our earlier function
                     var bbox = self.tileCoordsToBBox(self.state.map, coord, zoom, tileWidth, tileHeight);
                     
@@ -88,8 +78,8 @@ class Map extends Component {
                     let sw = JSITM.gpsRef2itmRef(`${bbox[2]} ${bbox[3]}`).split(" ")
                     
                     if(850000 > ne[1] && ne[1] > 350000 && 850000 > sw[1] && sw[1] > 350000 && 350000 > ne[0] && ne[0] > 50000 && 350000 > sw[0] && sw[1] > 50000){
+                       
                         // The server endpoint for getting the images, where we pass bbox.join(',') through
-                        
                         var url = "https://ags.govmap.gov.il/proxy/proxy.ashx?http://govmap/arcgis/rest/services/AdditionalData/MapServer/export?dynamicLayers=" + self.convertObjectToString() + 
                         "&dpi=96&transparent=true&format=png32&layers=show:" + self.state.layersIds +"&bbox=" + 
                         ne[0] + "," + ne[1] + "," + sw[0] + "," + sw[1] + "&bboxSR=2039&imageSR=2039&size=" + self.state.map.getDiv().offsetWidth + "," + self.state.map.getDiv().offsetHeight + "&f=image";
@@ -102,6 +92,7 @@ class Map extends Component {
             tileSize: new window.google.maps.Size(tileWidth, tileHeight),
             opacity: 0.4
         });
+        this.state.map.overlayMapTypes.clear();
         this.state.map.overlayMapTypes.push(mapType);
     }
 
@@ -158,13 +149,13 @@ class Map extends Component {
             Headers: {origin: '127.0.0.1:3000'}
         })  
 
-        const layers = res.data.data['שכבות ממשלה ומוסדות ציבור'].layers
-        let filteredLayers = {}
+        const layers = res.data.data['שכבות ממשלה ומוסדות ציבור'].layers;
+        let filteredLayers = {};
 
         let idx = 0;
         for(const [key, layer] of Object.entries(layers)){
             
-            const {layerID, caption, minScale, maxScale} = layer
+            const {layerID, caption, minScale, maxScale} = layer;
             filteredLayers[idx] = {
                id: layerID,
                name: caption,
@@ -205,7 +196,7 @@ class Map extends Component {
                         <div className="grid-child" style={{marginTop: '20px'}}>
                             <SearchBar id="searchBar" mapRef={this.mapRef} center={this.center} changeCenter={this.handleCenterCallBack}></SearchBar>
                             <br/>
-                            <LayersCheckBox layers={this.state.layers} getLayer={this.getLayer.bind(this)}></LayersCheckBox>
+                            <LayersCheckBox layers={this.state.layers} getLayer={this.getLayer.bind(this)} onCheckedChange={this.mapOverlay.bind(this)}></LayersCheckBox>
                         </div>
                     </div>
                  </> );
