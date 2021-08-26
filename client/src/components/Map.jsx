@@ -45,6 +45,9 @@ class Map extends Component {
         this.setState({map: map})
     }
 
+    /*
+    converts tile coords to boundary box (global coords)
+    */
     tileCoordsToBBox(map, coord, zoom, tileWidth, tileHeight) {
         var proj = map.getProjection();
     
@@ -64,6 +67,10 @@ class Map extends Component {
         ];
     }
 
+
+    /*
+    overlaying an image (layer) on the map
+    */
     mapOverlay = () => {
         var tileWidth = 512,
         tileHeight = 512;
@@ -76,18 +83,19 @@ class Map extends Component {
                     // The call to our earlier function
                     var bbox = self.tileCoordsToBBox(self.state.map, coord, zoom, tileWidth, tileHeight);
                     
-                    //bottom_long, bottom_lat, top_long, top_lat
+                    //converts gps coords to ITM (israel transverse mercator)
                     let ne = JSITM.gpsRef2itmRef(`${bbox[0]} ${bbox[1]}`).split(" ")
                     let sw = JSITM.gpsRef2itmRef(`${bbox[2]} ${bbox[3]}`).split(" ")
                     
-                    console.log(self.state.map.getDiv().offsetWidth)
-                    console.log(self.state.map.getDiv().offsetHeight)
-
-                    // The server endpoint for getting the images, where we pass bbox.join(',') through
-                    var url = "https://ags.govmap.gov.il/proxy/proxy.ashx?http://govmap/arcgis/rest/services/AdditionalData/MapServer/export?dynamicLayers=" + self.convertObjectToString() + 
+                    if(850000 > ne[1] && ne[1] > 350000 && 850000 > sw[1] && sw[1] > 350000 && 350000 > ne[0] && ne[0] > 50000 && 350000 > sw[0] && sw[1] > 50000){
+                        // The server endpoint for getting the images, where we pass bbox.join(',') through
+                        
+                        var url = "https://ags.govmap.gov.il/proxy/proxy.ashx?http://govmap/arcgis/rest/services/AdditionalData/MapServer/export?dynamicLayers=" + self.convertObjectToString() + 
                         "&dpi=96&transparent=true&format=png32&layers=show:" + self.state.layersIds +"&bbox=" + 
                         ne[0] + "," + ne[1] + "," + sw[0] + "," + sw[1] + "&bboxSR=2039&imageSR=2039&size=" + self.state.map.getDiv().offsetWidth + "," + self.state.map.getDiv().offsetHeight + "&f=image";
-                    return url;
+                        
+                        return url;
+                    }
                 }
             },
             isPng: true,
@@ -97,6 +105,9 @@ class Map extends Component {
         this.state.map.overlayMapTypes.push(mapType);
     }
 
+    /*
+    creates a string that represents the layers required and some additional data.
+    */
     convertObjectToString = () => {
 
         let st = "[";
@@ -116,6 +127,9 @@ class Map extends Component {
         return st;
     }
 
+    /*
+    LayersCheckBox provokes that method after a layer is chosen
+    */
     getLayer = (e) => {
 
         const layerKey = e.target.value;
@@ -123,7 +137,7 @@ class Map extends Component {
             let {dynamicLayers} = this.state;
             delete dynamicLayers[layerKey]
             this.setState({dynamicLayers: dynamicLayers});
-            
+
             return
         }
 
@@ -134,9 +148,12 @@ class Map extends Component {
         this.setState({dynamicLayers: dynamicLayers});
     }
 
+    /*
+    gets all layers data from an endpoint
+    */
     async initLayers(){
 
-        const res = await axios.post('https://cors-anywhere.herokuapp.com/https://ags.govmap.gov.il/Layers/GetTocLayers', 
+        const res = await axios.post('https://cors.bridged.cc/https://ags.govmap.gov.il/Layers/GetTocLayers', 
         {
             Headers: {origin: '127.0.0.1:3000'}
         })  
@@ -166,31 +183,36 @@ class Map extends Component {
     }
 
     render() { 
-
         return ( <>
                     <br/>
-                    <div id="map" style={{height: '100vh', width: '100vw'}}>
-                    <Helmet>
-                        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
-                        <script type="text/javascript" src="https://www.govmap.gov.il/govmap/api/govmap.api.js"></script>
-                    </Helmet>
-                        <SearchBar mapRef={this.mapRef} center={this.center} changeCenter={this.handleCenterCallBack}></SearchBar>
-                        <LayersCheckBox layers={this.state.layers} getLayer={this.getLayer.bind(this)}></LayersCheckBox>
-                        <GoogleMapReact ref={this.mapRef}
-                            bootstrapURLKeys={{ key: 'AIzaSyDReDgyRM1t9H2HncIec_v_zh2DeJGggT0', libraries: ['geometry','drawing','places']}}
-                            defaultZoom={this.state.zoom}
-                            defaultCenter={this.state.center}
-                            // onClick={}
-                            yesIWantToUseGoogleMapApiInternals
-                            onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
-                            onZoomAnimationEnd={this.mapOverlay.bind(this)}
-                        />
+                    <div className="grid-container">
+                        <Helmet>
+                            <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+                            <script type="text/javascript" src="https://www.govmap.gov.il/govmap/api/govmap.api.js"></script>
+                        </Helmet>
+                        <div className="grid-child">
+                            <div id="map" style={{height: '100vh', width: '950px'}}>
+                                <GoogleMapReact ref={this.mapRef}
+                                    bootstrapURLKeys={{ key: 'AIzaSyDReDgyRM1t9H2HncIec_v_zh2DeJGggT0', libraries: ['geometry','drawing','places']}}
+                                    defaultZoom={this.state.zoom}
+                                    defaultCenter={this.state.center}
+                                    yesIWantToUseGoogleMapApiInternals
+                                    onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
+                                    onZoomAnimationEnd={this.mapOverlay.bind(this)}
+                                />
+                            </div>
+                        </div>
+                        <div className="grid-child" style={{marginTop: '20px'}}>
+                            <SearchBar id="searchBar" mapRef={this.mapRef} center={this.center} changeCenter={this.handleCenterCallBack}></SearchBar>
+                            <br/>
+                            <LayersCheckBox layers={this.state.layers} getLayer={this.getLayer.bind(this)}></LayersCheckBox>
+                        </div>
                     </div>
                  </> );
     }
 
-    componentDidMount() {
-        this.initLayers();
+    async componentWillMount() {
+        await this.initLayers();
     }
 
 }

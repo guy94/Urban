@@ -26,9 +26,9 @@ class NavBar extends Component {
                     <Router>
                         <Navbar bg="dark" variant="dark">
                             <Container>
-                                <Navbar.Brand href="#map">Urbanico</Navbar.Brand>
+                                <Navbar.Brand >Urbanico</Navbar.Brand>
                                 <Nav className="me-auto">
-                                    <Nav.Link as={Link} to={'/map'}></Nav.Link>
+                                    <Nav.Link as={Link} to={'/map'}>Map</Nav.Link>
                                 </Nav>
                             </Container>
                         </Navbar>
