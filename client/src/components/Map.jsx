@@ -11,7 +11,7 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.state = { center: {lat: 31.771959, lng:35.217018},
-                        zoom: 12,
+                        zoom: 16,
                         map: null,
                         layers: [],
                         dynamicLayers: {},
