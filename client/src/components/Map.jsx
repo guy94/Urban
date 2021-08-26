@@ -90,9 +90,9 @@ class Map extends Component {
             },
             isPng: true,
             tileSize: new window.google.maps.Size(tileWidth, tileHeight),
-            opacity: 0.4
+            opacity: 1
         });
-        this.state.map.overlayMapTypes.clear();
+        this.state.map.overlayMapTypes.clear()
         this.state.map.overlayMapTypes.push(mapType);
     }
 
